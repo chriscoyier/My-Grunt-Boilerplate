@@ -11215,5 +11215,3 @@ $("#owl-demo").owlCarousel({
   itemsDesktopSmall : [979,3]
 
 });
-
-alert("hi");
