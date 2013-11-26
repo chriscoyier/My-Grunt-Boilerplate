@@ -35,6 +35,10 @@ module.exports = function(grunt) {
       }
     },
 
+    jshint: {
+      beforeconcat: ['js/*.js']
+    },
+
     concat: {
       dist: {
         src: [
@@ -58,7 +62,7 @@ module.exports = function(grunt) {
           expand: true,
           cwd: 'images/',
           src: ['**/*.{png,jpg,gif}'],
-          dest: 'images/build/'
+          dest: 'images/'
         }]
       }
     },
@@ -69,7 +73,7 @@ module.exports = function(grunt) {
       },
       scripts: {
         files: ['js/*.js'],
-        tasks: ['concat', 'uglify'],
+        tasks: ['concat', 'uglify', 'jshint'],
         options: {
           spawn: false,
         },
@@ -82,7 +86,7 @@ module.exports = function(grunt) {
         },
       },
       images: {
-        files: ['images/*.{png,jpg,gif}'],
+        files: ['images/**/*.{png,jpg,gif}', 'images/*.{png,jpg,gif}'],
         tasks: ['imagemin'],
         options: {
           spawn: false,
