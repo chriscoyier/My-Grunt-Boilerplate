@@ -11,5 +11,8 @@
     "grunt-contrib-connect": "~0.5.0",
     "grunt-autoprefixer": "~0.4.1",
     "grunt-contrib-cssmin": "~0.7.0"
+  },
+  "dependencies": {
+    "load-grunt-tasks": "~0.2.0"
   }
 }
