@@ -101,18 +101,7 @@ module.exports = function(grunt) {
 
   });
 
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-concat');
-
-  grunt.loadNpmTasks('grunt-contrib-sass');
-  grunt.loadNpmTasks('grunt-autoprefixer');
-  grunt.loadNpmTasks('grunt-contrib-cssmin');
-
-  grunt.loadNpmTasks('grunt-contrib-imagemin');
-
-  grunt.loadNpmTasks('grunt-contrib-connect');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  
+  require('load-grunt-tasks')(grunt);
 
   // Default is basically a rebuild
   grunt.registerTask('default', ['concat', 'uglify', 'sass', 'imagemin']);
