@@ -44,6 +44,9 @@ module.exports = function(grunt) {
     },
 
     watch: {
+      options: {
+        livereload: true,
+      },
       scripts: {
         files: ['js/*.js'],
         tasks: ['concat', 'uglify'],
@@ -57,8 +60,24 @@ module.exports = function(grunt) {
         options: {
           spawn: false,
         },
+      },
+      images: {
+        files: ['images/*.png'],
+        tasks: ['imagemin'],
+        options: {
+          spawn: false,
+        },
       }
-    }
+    },
+
+    connect: {
+      server: {
+        options: {
+          port: 8000,
+          base: './'
+        }
+      }
+    },
 
   });
 
@@ -67,7 +86,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-imagemin');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-connect');
 
-  grunt.registerTask('default', ['imagemin']);
+  // what should default be?
+  // everything?
+  grunt.registerTask('default', []);
+
+  grunt.registerTask('dev', ['connect', 'watch']);
 
 };
