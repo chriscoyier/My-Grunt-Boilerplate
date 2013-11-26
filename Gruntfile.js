@@ -7,7 +7,8 @@ module.exports = function(grunt) {
     sass: {
       dist: {
         options: {
-          style: 'compressed'
+          // cssmin will minify later
+          style: 'expanded'
         },
         files: {
           'css/build/global.css': 'css/global.scss'
@@ -20,6 +21,10 @@ module.exports = function(grunt) {
         browsers: ['last 2 version', 'ie 8', 'ie 7']
       },
       multiple_files: {
+        // not sure what these do
+        // can't seem to get it to
+        // output minified
+        // thus using cssmin
         expand: true,
         flatten: true,
         src: 'css/build/*.css',
