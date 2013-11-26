@@ -6,3 +6,16 @@ $backgroundColor: #eee;
 body {
   background: $backgroundColor;
 }
+
+.moving-box {
+  background: #f06d06;
+  width: 100px;
+  height: 100px;
+  animation: swing 3s ease alternate infinite;
+}
+
+@keyframes swing {
+  100% {
+    transform: translateX(100px);
+  }
+}

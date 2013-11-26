@@ -15,6 +15,26 @@ module.exports = function(grunt) {
       }
     },
 
+    autoprefixer: {
+      options: {
+        browsers: ['last 2 version', 'ie 8', 'ie 7']
+      },
+      multiple_files: {
+        expand: true,
+        flatten: true,
+        src: 'css/build/*.css',
+        dest: 'css/build/prefixed/'
+      }
+    },
+
+    cssmin: {
+      combine: {
+        files: {
+          'css/build/minified/global.css': ['css/build/prefixed/global.css']
+        }
+      }
+    },
+
     concat: {
       dist: {
         src: [
@@ -56,13 +76,13 @@ module.exports = function(grunt) {
       },
       css: {
         files: ['css/*.scss'],
-        tasks: ['sass'],
+        tasks: ['sass', 'autoprefixer', 'cssmin'],
         options: {
           spawn: false,
         },
       },
       images: {
-        files: ['images/*.png'],
+        files: ['images/*.{png,jpg,gif}'],
         tasks: ['imagemin'],
         options: {
           spawn: false,
@@ -83,14 +103,19 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-sass');
-  grunt.loadNpmTasks('grunt-contrib-imagemin');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-connect');
 
-  // what should default be?
-  // everything?
-  grunt.registerTask('default', []);
+  grunt.loadNpmTasks('grunt-contrib-sass');
+  grunt.loadNpmTasks('grunt-autoprefixer');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
+
+  grunt.loadNpmTasks('grunt-contrib-imagemin');
+
+  grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-contrib-watch');
+  
+
+  // Default is basically a rebuild
+  grunt.registerTask('default', ['concat', 'uglify', 'sass', 'imagemin']);
 
   grunt.registerTask('dev', ['connect', 'watch']);
 
