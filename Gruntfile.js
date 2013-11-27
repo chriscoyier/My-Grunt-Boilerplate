@@ -1,3 +1,26 @@
+/* 
+
+TO DO
+
+1) Reduce CSS duplication
+   - Ideally just a single build - global.scss turns into /build/global.css
+   - Can Autoprefixer output minified?
+   - If it can, is it as good as cssmin?
+   - Could Sass be used again to minify instead?
+   - If it can, is it as good as cssmin?
+
+2) Better JS dependency management
+   - Not sure I like the RequireJS way
+   - Can it be like the Asset Pipeline where you just do //= require "whatever.js"
+
+3) Is HTML minification worth it?
+
+4) Set up a Jasmine test just to try it.
+
+5) Can this Gruntfile.js be abstracted into smaller parts?
+
+*/    
+
 module.exports = function(grunt) {
 
   grunt.initConfig({
@@ -18,13 +41,9 @@ module.exports = function(grunt) {
 
     autoprefixer: {
       options: {
-        browsers: ['last 2 version', 'ie 8', 'ie 7']
+        browsers: ['last 2 version']
       },
       multiple_files: {
-        // not sure what these do
-        // can't seem to get it to
-        // output minified
-        // thus using cssmin
         expand: true,
         flatten: true,
         src: 'css/build/*.css',
@@ -81,21 +100,21 @@ module.exports = function(grunt) {
         tasks: ['concat', 'uglify', 'jshint'],
         options: {
           spawn: false,
-        },
+        }
       },
       css: {
         files: ['css/*.scss'],
         tasks: ['sass', 'autoprefixer', 'cssmin'],
         options: {
           spawn: false,
-        },
+        }
       },
       images: {
         files: ['images/**/*.{png,jpg,gif}', 'images/*.{png,jpg,gif}'],
         tasks: ['imagemin'],
         options: {
           spawn: false,
-        },
+        }
       }
     },
 
@@ -112,7 +131,7 @@ module.exports = function(grunt) {
 
   require('load-grunt-tasks')(grunt);
 
-  // Default is basically a rebuild
+  // Default Task is basically a rebuild
   grunt.registerTask('default', ['concat', 'uglify', 'sass', 'imagemin']);
 
   grunt.registerTask('dev', ['connect', 'watch']);
