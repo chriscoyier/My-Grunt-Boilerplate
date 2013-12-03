@@ -1,10 +1,29 @@
+$backgroundColor: #eee;
+$spacing: 2rem;
+$links: #35a8ff;
+
+@import "libs/normalize";
 @import "libs/owl.carousel";
 @import "owl.theme";
 
-$backgroundColor: #eee;
-
-body {
+* {
+  box-sizing: border-box;
+}
+html {
   background: $backgroundColor;
+  padding: $spacing;
+}
+body {
+  padding: $spacing;
+  background: white;
+}
+
+a {
+  color: $links;
+  text-decoration: none;
+  &:hover, &:focus {
+    color: darken($links, 25%);
+  }
 }
 
 .moving-box {
@@ -14,6 +33,7 @@ body {
   animation: swing 3s ease alternate infinite;
 }
 
+// Example of ignoring prefixes
 @keyframes swing {
   100% {
     transform: translateX(100px);

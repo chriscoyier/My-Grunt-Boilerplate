@@ -10,7 +10,7 @@ TO DO
    - If it can, is it as good as cssmin?
 
 2) Better JS dependency management
-   - Not sure I like the RequireJS way
+   - Require js?
    - Can it be like the Asset Pipeline where you just do //= require "whatever.js"
 
 3) Is HTML minification worth it?
@@ -18,6 +18,7 @@ TO DO
 4) Set up a Jasmine test just to try it.
 
 5) Can this Gruntfile.js be abstracted into smaller parts?
+   - https://github.com/cowboy/wesbos/commit/5a2980a7818957cbaeedcd7552af9ce54e05e3fb
 
 */    
 
