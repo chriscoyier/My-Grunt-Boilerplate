@@ -70,7 +70,7 @@ module.exports = function(grunt) {
           'js/libs/*.js',
           'js/global.js'
         ],
-        dest: 'js/build/production.js',
+        dest: 'js/build/production.js'
       }
     },
 
