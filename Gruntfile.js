@@ -1,4 +1,4 @@
-/* 
+/*
 
 TO DO
 
@@ -20,121 +20,45 @@ TO DO
 5) Can this Gruntfile.js be abstracted into smaller parts?
    - https://github.com/cowboy/wesbos/commit/5a2980a7818957cbaeedcd7552af9ce54e05e3fb
 
-*/    
+*/
 
 module.exports = function(grunt) {
 
-  grunt.initConfig({
+  // Utility to load the different option files
+  // based on their names
+  function loadConfig(path) {
+    var glob = require('glob');
+    var object = {};
+    var key;
 
-    pkg: grunt.file.readJSON('package.json'),
+    glob.sync('*', {cwd: path}).forEach(function(option) {
+      key = option.replace(/\.js$/,'');
+      object[key] = require(path + option);
+    });
 
-    sass: {
-      dist: {
-        options: {
-          // cssmin will minify later
-          style: 'expanded'
-        },
-        files: {
-          'css/build/global.css': 'css/global.scss'
-        }
-      }
-    },
+    return object;
+  }
 
-    autoprefixer: {
-      options: {
-        browsers: ['last 2 version']
-      },
-      multiple_files: {
-        expand: true,
-        flatten: true,
-        src: 'css/build/*.css',
-        dest: 'css/build/prefixed/'
-      }
-    },
+  // Initial config
+  var config = {
+    pkg: grunt.file.readJSON('package.json')
+  }
 
-    cssmin: {
-      combine: {
-        files: {
-          'css/build/minified/global.css': ['css/build/prefixed/global.css']
-        }
-      }
-    },
+  // Load tasks from the tasks folder
+  grunt.loadTasks('tasks');
 
-    jshint: {
-      beforeconcat: ['js/*.js']
-    },
+  // Load all the tasks options in tasks/options base on the name:
+  // watch.js => watch{}
+  grunt.util._.extend(config, loadConfig('./tasks/options/'));
 
-    concat: {
-      dist: {
-        src: [
-          'js/libs/*.js',
-          'js/global.js'
-        ],
-        dest: 'js/build/production.js'
-      }
-    },
-
-    uglify: {
-      build: {
-        src: 'js/build/production.js',
-        dest: 'js/build/production.min.js'
-      }
-    },
-
-    imagemin: {
-      dynamic: {
-        files: [{
-          expand: true,
-          cwd: 'images/',
-          src: ['**/*.{png,jpg,gif}'],
-          dest: 'images/'
-        }]
-      }
-    },
-
-    watch: {
-      options: {
-        livereload: true,
-      },
-      scripts: {
-        files: ['js/*.js'],
-        tasks: ['jshint', 'concat', 'uglify'],
-        options: {
-          spawn: false,
-        }
-      },
-      css: {
-        files: ['css/*.scss'],
-        tasks: ['sass', 'autoprefixer', 'cssmin'],
-        options: {
-          spawn: false,
-        }
-      },
-      images: {
-        files: ['images/**/*.{png,jpg,gif}', 'images/*.{png,jpg,gif}'],
-        tasks: ['imagemin'],
-        options: {
-          spawn: false,
-        }
-      }
-    },
-
-    connect: {
-      server: {
-        options: {
-          port: 8000,
-          base: './'
-        }
-      }
-    },
-
-  });
+  grunt.initConfig(config);
 
   require('load-grunt-tasks')(grunt);
 
   // Default Task is basically a rebuild
-  grunt.registerTask('default', ['concat', 'uglify', 'sass', 'imagemin']);
+  grunt.registerTask('default', ['concat', 'uglify', 'sass', 'imagemin', 'autoprefixer', 'cssmin']);
 
-  grunt.registerTask('dev', ['connect', 'watch']);
+  // Moved to the tasks folder:
+  // grunt.registerTask('dev', ['connect', 'watch']);
 
 };
