@@ -6,9 +6,11 @@ $links: #35a8ff;
 @import "libs/owl.carousel";
 @import "owl.theme";
 
+
 * {
   box-sizing: border-box;
 }
+
 html {
   background: $backgroundColor;
   padding: $spacing;
